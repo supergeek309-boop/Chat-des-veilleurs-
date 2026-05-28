@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+
+<style>
+body{
+background:#0d1117;
+color:white;
+font-family:Arial;
+text-align:center;
+padding:30px;
+}
+
+.box{
+background:#161b22;
+padding:20px;
+border-radius:15px;
+max-width:500px;
+margin:auto;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:10px;
+background:#238636;
+color:white;
+cursor:pointer;
+font-size:14px;
+}
+
+button:hover{
+background:#2ea043;
+}
+
+#adminBtn{
+display:none;
+background:#d29922;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>👁️ Veilleurs</h1>
+
+<p id="info"></p>
+
+<button onclick="go('chat.html')">💬 Chat</button>
+<button onclick="go('files.html')">📁 Fichiers</button>
+<button onclick="go('members.html')">👥 Membres</button>
+<button onclick="go('news.html')">📰 Actus</button>
+
+<button id="adminBtn" onclick="go('admin.html')">⚙️ Admin Panel</button>
+
+<button onclick="logout()">🚪 Déconnexion</button>
+
+</div>
+
+<script>
+
+let role = localStorage.getItem("role");
+let user = localStorage.getItem("user");
+
+// sécurité
+if(!role){
+location.href="index.html";
+}
+
+// affichage user
+document.getElementById("info").innerText =
+"Connecté: " + user + " (" + role + ")";
+
+// bouton admin visible seulement admin
+if(role === "admin"){
+document.getElementById("adminBtn").style.display="block";
+}
+
+function go(page){
+location.href = page;
+}
+
+function logout(){
+localStorage.clear();
+location.href="index.html";
+}
+
+</script>
+
+</body>
+</html>

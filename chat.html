@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Chat</title>
+<style>
+body{background:#0d1117;color:white;font-family:Arial;padding:20px;}
+textarea{width:100%;height:100px;}
+button{padding:10px;margin-top:10px;background:#238636;color:white;border:none;}
+.msg{background:#161b22;margin-top:10px;padding:10px;border-radius:10px;}
+</style>
+</head>
+<body>
+
+<h2>💬 Chat</h2>
+<button onclick="back()">⬅ retour</button>
+
+<textarea id="m"></textarea>
+<button onclick="send()">Envoyer</button>
+
+<div id="feed"></div>
+
+<script>
+
+if(!localStorage.getItem("role")) location.href="index.html";
+
+let msgs = JSON.parse(localStorage.getItem("msgs") || "[]");
+
+function send(){
+
+let t=document.getElementById("m").value;
+if(!t) return;
+
+msgs.push({
+u:localStorage.getItem("user"),
+t:t
+});
+
+localStorage.setItem("msgs",JSON.stringify(msgs));
+document.getElementById("m").value="";
+render();
+}
+
+function render(){
+
+let f=document.getElementById("feed");
+f.innerHTML="";
+
+msgs.slice().reverse().forEach(m=>{
+f.innerHTML+=`
+<div class="msg">
+<b>${m.u}</b><br>${m.t}
+</div>`;
+});
+}
+
+function back(){
+location.href="dashboard.html";
+}
+
+render();
+
+</script>
+
+</body>
+</html>

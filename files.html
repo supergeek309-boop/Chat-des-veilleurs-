@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Fichiers</title>
+<style>
+body{background:#0d1117;color:white;font-family:Arial;padding:20px;}
+.file{background:#161b22;padding:10px;margin-top:10px;border-radius:10px;}
+button{padding:10px;background:#238636;color:white;border:none;}
+</style>
+</head>
+<body>
+
+<h2>📁 Fichiers</h2>
+
+<button onclick="back()">⬅ retour</button>
+
+<input type="file" id="f">
+<button onclick="up()">Upload</button>
+
+<div id="list"></div>
+
+<script>
+
+if(!localStorage.getItem("role")) location.href="index.html";
+
+let files = JSON.parse(localStorage.getItem("files") || "[]");
+
+function up(){
+let file=document.getElementById("f").files[0];
+if(!file) return;
+
+let r=new FileReader();
+
+r.onload=function(){
+
+files.push({
+name:file.name,
+data:r.result,
+u:localStorage.getItem("user")
+});
+
+localStorage.setItem("files",JSON.stringify(files));
+render();
+}
+
+r.readAsDataURL(file);
+}
+
+function render(){
+
+let l=document.getElementById("list");
+l.innerHTML="";
+
+files.slice().reverse().forEach(f=>{
+l.innerHTML+=`
+<div class="file">
+<a download="${f.name}" href="${f.data}">${f.name}</a>
+<br>${f.u}
+</div>`;
+});
+}
+
+function back(){
+location.href="dashboard.html";
+}
+
+render();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<style>
+body{background:#0d1117;color:white;font-family:Arial;display:flex;justify-content:center;align-items:center;height:100vh;}
+.box{background:#161b22;padding:20px;border-radius:15px;width:300px;}
+input,button{width:100%;padding:10px;margin-top:10px;border-radius:10px;border:none;}
+button{background:#238636;color:white;}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>🔐 Login Veilleurs</h2>
+<input id="u" placeholder="user">
+<input id="p" type="password" placeholder="pass">
+<button onclick="login()">Connexion</button>
+</div>
+
+<script>
+
+const ADMIN = {u:"irox", p:"vichy639."};
+
+const USERS = {
+veilleur1:"mario",
+veilleur2:"vador",
+veilleur3:"lyon"
+};
+
+function login(){
+
+let u=document.getElementById("u").value.trim();
+let p=document.getElementById("p").value.trim();
+
+if(u===ADMIN.u && p===ADMIN.p){
+localStorage.setItem("role","admin");
+localStorage.setItem("user",u);
+location.href="dashboard.html";
+return;
+}
+
+if(USERS[u] && USERS[u]===p){
+localStorage.setItem("role","user");
+localStorage.setItem("user",u);
+location.href="dashboard.html";
+return;
+}
+
+alert("refusé");
+}
+
+</script>
+
+</body>
+</html>

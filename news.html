@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Actus</title>
+
+<style>
+body{background:#0d1117;color:white;font-family:Arial;padding:20px;}
+.post{background:#161b22;padding:10px;margin-top:10px;border-radius:10px;}
+textarea{width:100%;height:80px;margin-top:10px;}
+button{padding:10px;margin-top:10px;background:#238636;color:white;border:none;}
+.hidden{display:none;}
+</style>
+</head>
+<body>
+
+<h2>📰 Actus Veilleurs</h2>
+
+<button onclick="back()">⬅ retour</button>
+
+<!-- ADMIN POST -->
+<div id="adminBox" class="hidden">
+<h3>✏️ Publier une actu</h3>
+<textarea id="a"></textarea>
+<button onclick="post()">Publier</button>
+</div>
+
+<hr>
+
+<div id="feed"></div>
+
+<script>
+
+if(!localStorage.getItem("role")){
+location.href="index.html";
+}
+
+let role = localStorage.getItem("role");
+
+let news = JSON.parse(localStorage.getItem("news") || "[]");
+
+// afficher admin box seulement admin
+if(role==="admin"){
+document.getElementById("adminBox").classList.remove("hidden");
+}
+
+function post(){
+
+let t=document.getElementById("a").value;
+if(!t) return;
+
+news.push({
+t:t,
+by:localStorage.getItem("user")
+});
+
+localStorage.setItem("news",JSON.stringify(news));
+document.getElementById("a").value="";
+render();
+}
+
+function render(){
+
+let f=document.getElementById("feed");
+f.innerHTML="";
+
+news.slice().reverse().forEach(n=>{
+f.innerHTML+=`
+<div class="post">
+📰 ${n.t}<br>
+<small>par ${n.by}</small>
+</div>`;
+});
+}
+
+function back(){
+location.href="dashboard.html";
+}
+
+render();
+
+</script>
+
+</body>
+</html>

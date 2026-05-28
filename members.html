@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset:"UTF-8">
+<title>Membres</title>
+<style>
+body{background:#0d1117;color:white;font-family:Arial;padding:20px;}
+.user{background:#161b22;padding:10px;margin-top:10px;border-radius:10px;}
+button{padding:10px;background:#238636;color:white;border:none;}
+</style>
+</head>
+<body>
+
+<h2>👥 Membres</h2>
+
+<button onclick="back()">⬅</button>
+
+<div id="list"></div>
+
+<script>
+
+let users=JSON.parse(localStorage.getItem("users")||"{}");
+
+function render(){
+let l=document.getElementById("list");
+l.innerHTML="";
+
+for(let u in users){
+l.innerHTML+=`<div class="user">👤 ${u}</div>`;
+}
+}
+
+function back(){location.href="dashboard.html"}
+
+render();
+
+</script>
+
+</body>
+</html>
